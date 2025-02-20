@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
-import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 const provider = new GoogleAuthProvider();
 
 const AuthContext = createContext()
@@ -13,9 +13,13 @@ export default function AuthContext({children}) {
     setLoading(true)
     return signInWithPopup(auth,provider)
   }
+  const signout = () => {
+    setLoading(true)
+    return signOut(auth)
+  }
   const userInfo = {
     google,
-    loading,user
+    loading,user,signout
   }
 
   useEffect(() => {

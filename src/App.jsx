@@ -1,11 +1,13 @@
 import React from 'react'
 import banner from '/banner.jpg'
 import Swal from 'sweetalert2'
+import ShowAllTask from './Alltask/ShowAllTask'
+import { Link } from 'react-router'
 export default function App() {
 
     const formHandle = (e) => {
         e.preventDefault()
-        const title = e.target.ttile.value.trim()
+        const title = e.target.title.value.trim()
         const details = e.target.details.value.trim()
         const status = e.target.status.value.trim()
         const time = new Date().toISOString();
@@ -42,10 +44,11 @@ export default function App() {
     }
 
     return (
+      <>
         <div>
 
      <div className='flex items-center justify-center mb-5'>
-     <img src={banner} className='h-96 flex items-center' alt="hpw" />
+     {/* <img src={banner} className='h-96 flex items-center' alt="hpw" /> */}
      </div>
             {/* task */}
             <div className="w-11/12 max-w-md mx-auto py-8 bg-white shadow-lg rounded-lg p-6">
@@ -56,7 +59,7 @@ export default function App() {
       <input
         type="text"
         placeholder="Type your task"
-        name="ttile"
+        name="title"
         required
         className="input input-bordered input-info w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
@@ -79,12 +82,19 @@ export default function App() {
       className="text-sm text-gray-500">Timestamp: {new Date().toLocaleString()}</p>
       <button
         type="submit"
-        className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition duration-300"
+        className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition duration-300 cursor-pointer"
       >
         Add Task
       </button>
     </form>
   </div>
         </div>
+
+
+        {/* show task */}
+      <div className='flex items-center justify-center mt-10'>
+      <Link to={'/alltask'} className=' bg-yellow-500 px-5 font-semibold py-3 rounded-lg transition duration-300 cursor-pointer' >See All Task</Link>
+      </div>
+      </>
   )
 }
