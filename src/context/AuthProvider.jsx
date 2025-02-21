@@ -5,6 +5,7 @@ import {
   onAuthStateChanged,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 const provider = new GoogleAuthProvider();
 import auth from "../firebase/_firebase_init";
@@ -26,11 +27,20 @@ export default function AuthProvider({ children }) {
     setLoading(true);
     return signOut(auth);
   };
+  
+  const updateUserInfo = (name,photo) => {
+    return updateProfile(auth.currentUser,{
+      displayName:name,
+      photURL:photo
+    }
+      );
+  };
   const userInfo = {
     google,
     loading,
     user,
     signout,
+    updateUserInfo
   };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {

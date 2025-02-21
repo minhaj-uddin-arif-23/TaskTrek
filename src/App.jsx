@@ -72,7 +72,9 @@ export default function App() {
 
   return (
     <>
-      <div className="mt-28">
+    <section className="">
+    <div className="">
+    <div className="mt-28">
         <div className="flex items-center justify-center mb-5">
           {/* <img src={banner} className='h-96 flex items-center' alt="hpw" /> */}
         </div>
@@ -126,6 +128,11 @@ export default function App() {
           See All Task
         </Link>
       </div>
+    </div>
+    {/* <div className="col-span-7">
+      <ShowAllTask />
+    </div> */}
+    </section>
     </>
   );
 }
