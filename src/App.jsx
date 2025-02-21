@@ -1,17 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import banner from '/banner.jpg'
 import Swal from 'sweetalert2'
 import ShowAllTask from './Alltask/ShowAllTask'
 import { Link } from 'react-router'
+import { AuthContexts } from './context/AuthProvider'
 export default function App() {
-
+  const {user} = useContext(AuthContexts)
     const formHandle = (e) => {
         e.preventDefault()
         const title = e.target.title.value.trim()
         const details = e.target.details.value.trim()
         const status = e.target.status.value.trim()
         const time = new Date().toISOString();
-        const taskInfo = {title,details,status,time}
+        const taskInfo = {title,details,status,time,email:user.email}
         
         if(title.length > 50){
             Swal.fire({

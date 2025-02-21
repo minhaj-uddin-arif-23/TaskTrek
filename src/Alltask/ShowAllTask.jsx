@@ -1,25 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import usePublic from "../hook/usePublic";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import moment from "moment";
 import { Link } from "react-router";
 import { Pencil, Trash2 } from 'lucide-react';
 import Swal from "sweetalert2";
+import { AuthContexts } from "../context/AuthProvider";
 export default function ShowAllTask() {
   const [filter,setFilter] = useState("")
+  const {user} =useContext(AuthContexts)
   const axiosPublic = usePublic();
   const queryClient = useQueryClient();
   const { data: task = [] ,refetch} = useQuery({
-    queryKey: ["task",filter],
+    queryKey: ["task",filter,user],
     queryFn: async () => {
-      const { data } = await axiosPublic.get(`/showTask?filter=${filter}`);
+      const { data } = await axiosPublic.get(`/showTask/${user?.email}?filter=${filter}`);
       return data;
     },
   });
 
   useEffect(() => {
     refetch()
-  },[filter,refetch])
+  },[filter,refetch,user])
 
   const handleDelete = async (id) => {
     Swal.fire({
@@ -62,9 +64,9 @@ export default function ShowAllTask() {
                <option disabled selected>
             Category
           </option>
-          <option> All</option>
-              <option value='to-do' >To Do</option>
-              <option  value='in-progess'>In Progress</option>
+          {/* <option> All</option> */}
+              <option value='to-do'>To Do</option>
+              <option  value='in-progress'>In Progress</option>
               <option value='done'>Done</option>
             </select>
     </div>

@@ -15,7 +15,7 @@ export default function Login() {
       await google();
       Swal.fire({
         title: "Success!",
-        text: "Your task has been added successfully.",
+        text: "Your have been login successfully.",
         icon: "success",
         confirmButtonText: "OK",
       });
@@ -31,6 +31,9 @@ export default function Login() {
 
   return (
     <div className="mt-32 flex flex-col items-center">
+        <h1 className="text-3xl font-semibold  text-center mr-12 mb-3 text-blue-600">
+    Please log in to add your tasks
+  </h1>
       <div action="" className="w-full max-w-sm">
         <button onClick={gooleLogin} className="mt-4 btn btn-outline btn-info flex items-center gap-2 border-2 border-gray-200 px-16 py-2 rounded-xl">
           <img
