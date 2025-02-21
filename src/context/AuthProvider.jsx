@@ -38,11 +38,14 @@ export default function AuthProvider({ children }) {
         setUser(currentUser);
         // Send user data to the server to add it to the database
         try {
-          const response = await axios.post(`http://localhost:8000/user/${currentUser?.email}`, {
-            email: currentUser?.email,
-            name: currentUser?.displayName,
-            uid: currentUser?.uid,
-          });
+          const response = await axios.post(
+            `https://task-trek-server-two.vercel.app/user/${currentUser?.email}`,
+            {
+              email: currentUser?.email,
+              name: currentUser?.displayName,
+              uid: currentUser?.uid,
+            }
+          );
 
           // Get token from the server and store it in localStorage
           const userInfo = { email: currentUser?.email };

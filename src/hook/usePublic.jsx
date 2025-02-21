@@ -1,9 +1,9 @@
 import axios from "axios";
 
 export const axiosPublic = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "https://task-trek-server-two.vercel.app",
 });
 
 export default function usePublic() {
-  return axiosPublic
+  return axiosPublic;
 }

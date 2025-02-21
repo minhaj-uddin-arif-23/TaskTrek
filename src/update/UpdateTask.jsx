@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import usePublic from "../hook/usePublic";
 export default function UpdateTask() {
   // const taskData  = useLoaderData()
-  const {id} = useParams()
+  const { id } = useParams();
   // console.log(loader)
   // const {_id,title,details,status,time} = taskData
   //  const axiosPublic = usePublic()
@@ -33,8 +33,8 @@ export default function UpdateTask() {
     //   return;
     // }
     // console.log(taskInfo)
-   
-    fetch(`http://localhost:8000/updateTask/${id}`, {
+    // https://task-trek-server-two.vercel.app
+    fetch(`https://task-trek-server-two.vercel.app/updateTask/${id}`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",
@@ -93,9 +93,10 @@ export default function UpdateTask() {
               <option value="in-progress">In Progress</option>
               <option value="done">Done</option>
             </select>
-            <p 
-            // defaultValue={time} 
-            className="text-sm text-gray-500">
+            <p
+              // defaultValue={time}
+              className="text-sm text-gray-500"
+            >
               Timestamp: {new Date().toLocaleString()}
             </p>
             <button

@@ -31,9 +31,15 @@ createRoot(document.getElementById("root")).render(
             />
             <Route
               path="/updateTask/:id"
-              element={<PrivateRoute><UpdateTask /></PrivateRoute>}
+              element={
+                <PrivateRoute>
+                  <UpdateTask />
+                </PrivateRoute>
+              }
               loader={(params) =>
-                fetch(`http://localhost:8000/updateTask/${params.id}`)
+                fetch(
+                  `https://task-trek-server-two.vercel.app/updateTask/${params.id}`
+                )
               }
             />
             <Route path="/login" element={<Login />} />
