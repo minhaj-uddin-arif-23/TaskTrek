@@ -9,11 +9,15 @@ import {
   QueryClient, QueryClientProvider
 } from '@tanstack/react-query'
 import UpdateTask from './update/UpdateTask.jsx'
+import Nabvar from './Navbar/Nabvar.jsx'
 const queryClient =new QueryClient();
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-     <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      
     <BrowserRouter>
+   
+    <Nabvar />
     <Routes>
       <Route path="/" element={<App />} />
       {/* < Route path='/home' element = {<Home />} /> */}

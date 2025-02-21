@@ -1,22 +1,73 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import usePublic from "../hook/usePublic";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import moment from "moment";
 import { Link } from "react-router";
 import { Pencil, Trash2 } from 'lucide-react';
+import Swal from "sweetalert2";
 export default function ShowAllTask() {
+  const [filter,setFilter] = useState("")
   const axiosPublic = usePublic();
-  const { data: task = [] } = useQuery({
-    queryKey: ["task"],
+  const queryClient = useQueryClient();
+  const { data: task = [] ,refetch} = useQuery({
+    queryKey: ["task",filter],
     queryFn: async () => {
-      const { data } = await axiosPublic.get("/showTask");
+      const { data } = await axiosPublic.get(`/showTask?filter=${filter}`);
       return data;
     },
   });
 
+  useEffect(() => {
+    refetch()
+  },[filter,refetch])
+
+  const handleDelete = async (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await axiosPublic.delete(`/taskdelete/${id}`);
+          if (res.data.deletedCount > 0) {
+            Swal.fire("Deleted!", "Your task has been deleted.", "success");
+
+            queryClient.setQueryData(["task"], (oldTasks) =>
+              oldTasks.filter((task) => task._id !== id)
+            );
+          }
+        } catch (error) {
+          Swal.fire("Error!", "Something went wrong!", "error");
+        }
+      }
+    });
+  };
+
   return (
     <>
-      <div className="w-11/12 max-w-4xl mx-auto py-8 bg-white shadow-lg rounded-lg p-6">
+  
+      <div className="w-11/12 max-w-4xl mx-auto py-8 bg-white shadow-sm rounded-lg p-6 mt-32">
+      <div className="w-32">
+    <select
+              name="status"
+              // defaultValue={status}
+              onChange={(e) => setFilter(e.target.value)}
+              className="select select-bordered w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+               <option disabled selected>
+            Category
+          </option>
+          <option> All</option>
+              <option value='to-do' >To Do</option>
+              <option  value='in-progess'>In Progress</option>
+              <option value='done'>Done</option>
+            </select>
+    </div>
         <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
           All Tasks
         </h1>
@@ -36,7 +87,7 @@ export default function ShowAllTask() {
                       <Pencil size={18} className="mr-1" />
                   
                     </Link>
-                    <button className="flex items-center text-red-600 hover:text-red-800">
+                    <button onClick={() => handleDelete(data._id)} className="flex items-center text-red-600 hover:text-red-800">
                       <Trash2 size={18} className="mr-1" />
                      
                     </button>

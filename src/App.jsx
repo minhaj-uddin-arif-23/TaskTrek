@@ -38,14 +38,43 @@ export default function App() {
             body: JSON.stringify(taskInfo),
           })
             .then((res) => res.json())
-            .then((data) => console.log(data));
+            .then((data) => {
+        if (data.insertedId) {
+            // Show success message
+            Swal.fire({
+                title: "Success!",
+                text: "Your task has been added successfully.",
+                icon: "success",
+                confirmButtonText: "OK"
+            });
+
+            // Optional: Reset form fields after success
+            e.target.reset();
+        } else {
+            // Show error message if insertion failed
+            Swal.fire({
+                title: "Error!",
+                text: "Task could not be added. Try again!",
+                icon: "error"
+            });
+        }
+    })
+    .catch((error) => {
+        Swal.fire({
+            title: "Error!",
+            text: "Something went wrong. Please try again!",
+            icon: "error"
+        });
+        console.error("Error:", error);
+    });
+
         
 
     }
 
     return (
       <>
-        <div>
+        <div className='mt-28'>
 
      <div className='flex items-center justify-center mb-5'>
      {/* <img src={banner} className='h-96 flex items-center' alt="hpw" /> */}
